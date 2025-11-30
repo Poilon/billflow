@@ -12,16 +12,15 @@ import {
 } from "lucide-react";
 
 const providers = [
-  { name: "Orange", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Orange_logo.svg/220px-Orange_logo.svg.png", color: "#ff7900" },
-  { name: "Free", logo: "https://upload.wikimedia.org/wikipedia/fr/thumb/5/5b/Free_logo.svg/200px-Free_logo.svg.png", color: "#cd1e25" },
-  { name: "AWS", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/220px-Amazon_Web_Services_Logo.svg.png", color: "#ff9900" },
-  { name: "OVH", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/OVH_Logo.svg/200px-OVH_Logo.svg.png", color: "#000e9c" },
-  { name: "Google Cloud", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Google_Cloud_logo.svg/220px-Google_Cloud_logo.svg.png", color: "#4285f4" },
-  { name: "Bouygues", logo: "https://upload.wikimedia.org/wikipedia/fr/thumb/5/5d/Logo_Bouygues_Telecom.svg/220px-Logo_Bouygues_Telecom.svg.png", color: "#009ddc" },
-  { name: "SFR", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/SFR_2022.svg/200px-SFR_2022.svg.png", color: "#e2001a" },
-  { name: "EDF", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/EDF_logo.svg/200px-EDF_logo.svg.png", color: "#ff5f00" },
-  { name: "Engie", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Engie.svg/220px-Engie.svg.png", color: "#00aaff" },
-  { name: "Scaleway", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Scaleway_logo_2023.svg/220px-Scaleway_logo_2023.svg.png", color: "#4f0599" },
+  { name: "Orange", logo: "/logos/orange.png", color: "#ff7900" },
+  { name: "Free", logo: "/logos/free.png", color: "#cd1e25" },
+  { name: "AWS", logo: "/logos/aws.png", color: "#ff9900" },
+  { name: "OVH", logo: "/logos/ovh.png", color: "#000e9c" },
+  { name: "Google Cloud", logo: "/logos/google-cloud.svg", color: "#4285f4" },
+  { name: "Bouygues", logo: "/logos/bouygues.png", color: "#009ddc" },
+  { name: "SFR", logo: "/logos/sfr.png", color: "#e2001a" },
+  { name: "EDF", logo: "/logos/edf.png", color: "#ff5f00" },
+  { name: "Engie", logo: "/logos/engie.png", color: "#00aaff" },
 ];
 
 const features = [

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   FileText,
@@ -47,7 +47,7 @@ const connections: Connection[] = [
   {
     id: "1",
     provider: "Orange",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Orange_logo.svg/220px-Orange_logo.svg.png",
+    logo: "/logos/orange.png",
     email: "contact@monentreprise.fr",
     status: "connected",
     lastSync: "Il y a 2 heures",
@@ -57,7 +57,7 @@ const connections: Connection[] = [
   {
     id: "2",
     provider: "Free",
-    logo: "https://upload.wikimedia.org/wikipedia/fr/thumb/5/5b/Free_logo.svg/200px-Free_logo.svg.png",
+    logo: "/logos/free.png",
     email: "paul@gmail.com",
     status: "connected",
     lastSync: "Il y a 5 heures",
@@ -67,7 +67,7 @@ const connections: Connection[] = [
   {
     id: "3",
     provider: "AWS",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/220px-Amazon_Web_Services_Logo.svg.png",
+    logo: "/logos/aws.png",
     email: "admin@startup.io",
     status: "syncing",
     lastSync: "En cours...",
@@ -77,7 +77,7 @@ const connections: Connection[] = [
   {
     id: "4",
     provider: "OVH",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/OVH_Logo.svg/200px-OVH_Logo.svg.png",
+    logo: "/logos/ovh.png",
     email: "tech@monsite.com",
     status: "error",
     lastSync: "Erreur de connexion",
@@ -87,7 +87,7 @@ const connections: Connection[] = [
   {
     id: "5",
     provider: "EDF",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/EDF_logo.svg/200px-EDF_logo.svg.png",
+    logo: "/logos/edf.png",
     email: "bureau@entreprise.fr",
     status: "connected",
     lastSync: "Hier",
@@ -100,7 +100,7 @@ const recentInvoices: Invoice[] = [
   {
     id: "inv-001",
     provider: "Orange",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Orange_logo.svg/220px-Orange_logo.svg.png",
+    logo: "/logos/orange.png",
     date: "28 Nov 2024",
     amount: "49,99 €",
     status: "paid",
@@ -109,7 +109,7 @@ const recentInvoices: Invoice[] = [
   {
     id: "inv-002",
     provider: "AWS",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/220px-Amazon_Web_Services_Logo.svg.png",
+    logo: "/logos/aws.png",
     date: "25 Nov 2024",
     amount: "847,23 €",
     status: "pending",
@@ -118,7 +118,7 @@ const recentInvoices: Invoice[] = [
   {
     id: "inv-003",
     provider: "Free",
-    logo: "https://upload.wikimedia.org/wikipedia/fr/thumb/5/5b/Free_logo.svg/200px-Free_logo.svg.png",
+    logo: "/logos/free.png",
     date: "22 Nov 2024",
     amount: "19,99 €",
     status: "paid",
@@ -127,7 +127,7 @@ const recentInvoices: Invoice[] = [
   {
     id: "inv-004",
     provider: "EDF",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/EDF_logo.svg/200px-EDF_logo.svg.png",
+    logo: "/logos/edf.png",
     date: "20 Nov 2024",
     amount: "156,78 €",
     status: "paid",
@@ -136,7 +136,7 @@ const recentInvoices: Invoice[] = [
   {
     id: "inv-005",
     provider: "OVH",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/OVH_Logo.svg/200px-OVH_Logo.svg.png",
+    logo: "/logos/ovh.png",
     date: "15 Nov 2024",
     amount: "29,00 €",
     status: "overdue",
@@ -145,12 +145,11 @@ const recentInvoices: Invoice[] = [
 ];
 
 const availableProviders = [
-  { name: "Google Cloud", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Google_Cloud_logo.svg/220px-Google_Cloud_logo.svg.png" },
-  { name: "Scaleway", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Scaleway_logo_2023.svg/220px-Scaleway_logo_2023.svg.png" },
-  { name: "Bouygues", logo: "https://upload.wikimedia.org/wikipedia/fr/thumb/5/5d/Logo_Bouygues_Telecom.svg/220px-Logo_Bouygues_Telecom.svg.png" },
-  { name: "SFR", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/SFR_2022.svg/200px-SFR_2022.svg.png" },
-  { name: "Engie", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Engie.svg/220px-Engie.svg.png" },
-  { name: "Digital Ocean", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/DigitalOcean_logo.svg/220px-DigitalOcean_logo.svg.png" },
+  { name: "Google Cloud", logo: "/logos/google-cloud.svg" },
+  { name: "Bouygues", logo: "/logos/bouygues.png" },
+  { name: "SFR", logo: "/logos/sfr.png" },
+  { name: "Engie", logo: "/logos/engie.png" },
+  { name: "Digital Ocean", logo: "/logos/digitalocean.png" },
 ];
 
 function StatusBadge({ status }: { status: ConnectionStatus }) {
@@ -190,6 +189,73 @@ function InvoiceStatusBadge({ status }: { status: "paid" | "pending" | "overdue"
 export default function Dashboard() {
   const [showAddModal, setShowAddModal] = useState(false);
   const [activeTab, setActiveTab] = useState<"connections" | "invoices">("connections");
+  const [soshLogin, setSoshLogin] = useState("");
+  const [soshPassword, setSoshPassword] = useState("");
+  const [soshContractId, setSoshContractId] = useState("");
+  const [isSavingCreds, setIsSavingCreds] = useState(false);
+  const [isCrawling, setIsCrawling] = useState(false);
+  const [crawlMessage, setCrawlMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    const loadCreds = async () => {
+      try {
+        const res = await fetch("/api/sosh/credentials");
+        const data = await res.json();
+        if (data?.credentials) {
+          setSoshLogin(data.credentials.login || "");
+          setSoshContractId(data.credentials.contractId || "");
+        }
+      } catch (error) {
+        console.error("Failed to load credentials", error);
+      }
+    };
+    loadCreds();
+  }, []);
+
+  const saveCredentials = async () => {
+    setIsSavingCreds(true);
+    setCrawlMessage(null);
+    try {
+      const res = await fetch("/api/sosh/credentials", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          login: soshLogin,
+          password: soshPassword,
+          contractId: soshContractId,
+        }),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data?.error || "Impossible d'enregistrer");
+      }
+      setCrawlMessage("Identifiants enregistrés.");
+      setSoshPassword("");
+    } catch (error: any) {
+      setCrawlMessage(error?.message || "Erreur lors de l'enregistrement");
+    } finally {
+      setIsSavingCreds(false);
+    }
+  };
+
+  const triggerCrawl = async () => {
+    setIsCrawling(true);
+    setCrawlMessage(null);
+    try {
+      const res = await fetch("/api/sosh/crawl", { method: "POST" });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data?.error || "Échec du crawl");
+      }
+      setCrawlMessage(
+        `Sync terminée : ${data.saved} facture(s) sauvées sur ${data.invoicesFound || data.saved}.`
+      );
+    } catch (error: any) {
+      setCrawlMessage(error?.message || "Échec du crawl");
+    } finally {
+      setIsCrawling(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -276,6 +342,70 @@ export default function Dashboard() {
             Ajouter un fournisseur
           </button>
         </header>
+
+        {/* Sosh/Orange credentials & sync */}
+        <div className="bg-card border border-border rounded-xl p-4 mb-6">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
+            <div>
+              <p className="font-semibold">Connexion Sosh/Orange</p>
+              <p className="text-sm text-muted">
+                Sauvegarde des identifiants en base Postgres, puis crawl Playwright pour récupérer les
+                factures.
+              </p>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={saveCredentials}
+                disabled={isSavingCreds}
+                className="px-4 py-2 rounded-lg bg-secondary hover:bg-border border border-border text-sm font-medium disabled:opacity-60"
+              >
+                {isSavingCreds ? "Enregistrement..." : "Enregistrer"}
+              </button>
+              <button
+                onClick={triggerCrawl}
+                disabled={isCrawling}
+                className="px-4 py-2 rounded-lg bg-primary text-white text-sm font-medium hover:bg-primary-dark disabled:opacity-60"
+              >
+                {isCrawling ? "Sync en cours..." : "Lancer la sync"}
+              </button>
+            </div>
+          </div>
+          <div className="grid gap-3 md:grid-cols-3">
+            <div className="flex flex-col gap-1">
+              <label className="text-sm text-muted">Identifiant (email/numéro)</label>
+              <input
+                value={soshLogin}
+                onChange={(e) => setSoshLogin(e.target.value)}
+                className="w-full rounded-lg border border-border bg-secondary px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+                placeholder="ex: 0601020304 ou email"
+              />
+            </div>
+            <div className="flex flex-col gap-1">
+              <label className="text-sm text-muted">Mot de passe</label>
+              <input
+                type="password"
+                value={soshPassword}
+                onChange={(e) => setSoshPassword(e.target.value)}
+                className="w-full rounded-lg border border-border bg-secondary px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+                placeholder="Mot de passe Orange/Sosh"
+              />
+            </div>
+            <div className="flex flex-col gap-1">
+              <label className="text-sm text-muted">ID contrat (facturation)</label>
+              <input
+                value={soshContractId}
+                onChange={(e) => setSoshContractId(e.target.value)}
+                className="w-full rounded-lg border border-border bg-secondary px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+                placeholder="ex: 9082365680"
+              />
+            </div>
+          </div>
+          {crawlMessage && (
+            <p className="mt-3 text-sm text-muted">
+              {crawlMessage}
+            </p>
+          )}
+        </div>
 
         {/* Stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
